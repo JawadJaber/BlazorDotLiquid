@@ -1,0 +1,56 @@
+﻿
+@page "/counter"
+@inject HttpClient _client
+@inject IJSRuntime JS;
+
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Get Report</button>
+
+
+@convertedMarkdown
+
+
+@code {
+    private int currentCount = 0;
+
+    private MarkupString convertedMarkdown;
+
+    private async void IncrementCount()
+    {
+        var templateString = await _client.GetStringAsync("Templates\\report.lqd");
+
+        var template = DotLiquid.Template.Parse(templateString);
+        var docContext = CreateDocumentContext();
+        var docString = template.Render(docContext);
+        //DocViewer.Document = (FlowDocument)XamlReader.Parse(docString);
+        Console.WriteLine(docString);
+
+        convertedMarkdown = new MarkupString(docString);
+
+        await JS.InvokeAsync<string>("htmltopdf", "divId");
+
+    }
+
+
+    private DotLiquid.Hash CreateDocumentContext()
+    {
+        var context = new
+        {
+            Title = "Hello, Habrahabr!",
+            Subtitle = "Experimenting with dotLiquid, FlowDocument and PDFSharp",
+            Steps = new List<dynamic>{
+                    new { Title = "Document Context", Description = "Create data source for dotLiquid Template"},
+                    new { Title = "Rendering", Description = "Load template string and render it into FlowDocument markup with Document Context given"},
+                    new { Title = "Parse markup", Description = "Use XAML Parser to prepare FlowDocument instance"},
+                    new { Title = "Save to XPS", Description = "Save prepared FlowDocument into XPS format"},
+                    new { Title = "Convert XPS to PDF", Description = "Convert XPS to WPF using PDFSharp"},
+                }
+        };
+
+        return DotLiquid.Hash.FromAnonymousObject(context);
+    }
+}
