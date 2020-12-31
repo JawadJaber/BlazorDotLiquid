@@ -4,12 +4,43 @@
 @inject IJSRuntime JS;
 
 
-<h1>Counter</h1>
+<h1>Test below functions to generate PDF report</h1>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div>
 
-<p>Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Get Report</button>
+    <div>
+        <h5>PDF from html2pdf library</h5>
+        <button class="btn btn-primary" @onclick="GetPDF1">Get Report</button>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
 
+    <div>
+        <h5>PDF from pdffromhtml library</h5>
+        <button class="btn btn-primary" @onclick="GetPDF2">Get Report</button>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+   
+    <div>
+        <h5>PDF from NlazorDotLiquid DLL</h5>
+        <button class="btn btn-outline-secondary" @onclick="GetPDF3">Get Report</button>
+        <br>
+        <br>
+        <br>
+    </div>
+
+</div>
 
 @convertedMarkdown
 
@@ -19,29 +50,66 @@
 
     private MarkupString convertedMarkdown;
 
-    private async void IncrementCount()
+    private void GetPDF1()
     {
-        var templateString = await _client.GetStringAsync("Templates\\report.lqd");
+        Task.Run(async () =>
+        {
+            var templateString = await _client.GetStringAsync("Templates\\report.lqd");
 
-        var template = DotLiquid.Template.Parse(templateString);
-        var docContext = CreateDocumentContext();
-        var docString = template.Render(docContext);
-        //DocViewer.Document = (FlowDocument)XamlReader.Parse(docString);
-        Console.WriteLine(docString);
+            var template = DotLiquid.Template.Parse(templateString);
+            var docContext = CreateDocumentContext();
+            var docString = template.Render(docContext);
+            convertedMarkdown = new MarkupString(docString);
 
-        convertedMarkdown = new MarkupString(docString);
-
-        await JS.InvokeAsync<string>("htmltopdf", "divId");
+            await JS.InvokeAsync<string>("htmltopdf", "divId");
+        });
 
     }
+
+
+    private void GetPDF2()
+    {
+        Task.Run(async () =>
+        {
+            var templateString = await _client.GetStringAsync("Templates\\report.lqd");
+
+            var template = DotLiquid.Template.Parse(templateString);
+            var docContext = CreateDocumentContext();
+            var docString = template.Render(docContext);
+            convertedMarkdown = new MarkupString(docString);
+
+            await JS.InvokeAsync<string>("pdffromhtml", "divId");
+        });
+
+    }
+
+
+    private void GetPDF3()
+    {
+        Task.Run(async () =>
+        {
+            var templateString = await _client.GetStringAsync("Templates\\report.lqd");
+
+            var template = DotLiquid.Template.Parse(templateString);
+            var docContext = CreateDocumentContext();
+            var docString = template.Render(docContext);
+            convertedMarkdown = new MarkupString(docString);
+
+            ReportFactoryJsInterop.GenerateReport(JS,"divId");
+        });
+
+    }
+
+
+  
 
 
     private DotLiquid.Hash CreateDocumentContext()
     {
         var context = new
         {
-            Title = "Hello, Habrahabr!",
-            Subtitle = "Experimenting with dotLiquid, FlowDocument and PDFSharp",
+            Title = "Hello, Jawad!",
+            Subtitle = "Experimenting with dotLiquid, html2pdf, and Blazor",
             Steps = new List<dynamic>{
                     new { Title = "Document Context", Description = "Create data source for dotLiquid Template"},
                     new { Title = "Rendering", Description = "Load template string and render it into FlowDocument markup with Document Context given"},

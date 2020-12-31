@@ -1,10 +1,11 @@
 ﻿<div id="divId">
-  
+  <h1>{{Title}}</h1>
+  <h2>{{subTitle}}</h2>
 <ul>
-{% for step in Steps -%}
-<h3>Report</h3>
+{% for step in Steps %}
+
 <p>{{ step.Title }}</p>
-{% endfor -%}
+{% endfor %}
 </ul>
 </div>
 

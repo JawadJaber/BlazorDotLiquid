@@ -1,5 +1,4 @@
-﻿window.htmltopdf = (d) =>
-{
+﻿window.htmltopdf = (d) => {
     var element = document.getElementById(d);
     var opt = {
         margin: 1,
@@ -8,6 +7,15 @@
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
-    html2pdf(element,opt);
-    
+
+    html2pdf(element, opt);
+
+
+
+}
+
+
+window.pdffromhtml = (d) => {
+    var element = document.getElementById(d);
+    HTMLtoPDF(element);
 }

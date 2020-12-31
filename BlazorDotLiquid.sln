@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDotLiquid.Client", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDotLiquid.Shared", "Shared\BlazorDotLiquid.Shared.csproj", "{EAECC6D7-3A7F-4728-BBDE-465B626290E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorDotLiquid", "BlazorDotLiquid\BlazorDotLiquid.csproj", "{BA00A5B1-B19A-4157-ABDD-C128ADC690E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EAECC6D7-3A7F-4728-BBDE-465B626290E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAECC6D7-3A7F-4728-BBDE-465B626290E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAECC6D7-3A7F-4728-BBDE-465B626290E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA00A5B1-B19A-4157-ABDD-C128ADC690E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA00A5B1-B19A-4157-ABDD-C128ADC690E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA00A5B1-B19A-4157-ABDD-C128ADC690E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA00A5B1-B19A-4157-ABDD-C128ADC690E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
